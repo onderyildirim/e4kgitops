@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: edge-identities
+  namespace: default
+data:
+  values.yaml: |
+    e4kmqtt:
+      authenticator:
+        type: "null"
+    e4kspiffe:
+      identitymanager:
+        configYaml:
+          entry:
+            - spiffe_id: '1'
+              spiffe_id_path: agent
+              attestation_config:
+                type: NODE
+                content:
+                  value:
+                    - 'AGENTSERVICEACCOUNT:iotedge-spiffe-agent'
+                  plugin: PSAT
+            - spiffe_id: '2'
+              spiffe_id_path: mqttbroker
+              attestation_config:
+                type: WORKLOAD
+                content:
+                  value:
+                    - 'PODLABELS:app:mqttbroker'
+                  plugin: K8S
+                  parent_id: '1'
+            - spiffe_id: '3'
+              spiffe_id_path: workload
+              attestation_config:
+                type: WORKLOAD
+                content:
+                  value:
+                    - 'PODLABELS:app:workload'
+                  plugin: K8S
+                  parent_id: '1'
+          
