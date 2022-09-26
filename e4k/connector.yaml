@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: connector
+  name: my-connector
   namespace: default
 data:
   values.yaml: |
