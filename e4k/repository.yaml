@@ -9,4 +9,5 @@ spec:
   interval: 1m
   # The repository URL, can be a HTTP/S or SSH address
   # url: https://azedgecharts.blob.core.windows.net/helm/
-  url: oci://edgecharts.azurecr.io/helm/az-e4k
+  # url: oci://edgecharts.azurecr.io/helm/az-e4k
+  url: oci://edgecharts.azurecr.io/helm
