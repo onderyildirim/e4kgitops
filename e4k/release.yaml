@@ -17,3 +17,6 @@ spec:
   valuesFrom:
   - kind: ConfigMap
     name: edge-identities
+  valuesFrom:
+  - kind: ConfigMap
+    name: connector
