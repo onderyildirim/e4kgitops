@@ -5,37 +5,19 @@ metadata:
   namespace: default
 data:
   values.yaml: |
-    e4kmqtt:
-      authenticator:
-        type: "null"
-    e4kspiffe:
-      identitymanager:
-        configYaml:
-          entry:
-            - spiffe_id: '1'
-              spiffe_id_path: agent
-              attestation_config:
-                type: NODE
-                content:
-                  value:
-                    - 'AGENTSERVICEACCOUNT:iotedge-spiffe-agent'
-                  plugin: PSAT
-            - spiffe_id: '2'
-              spiffe_id_path: mqttbroker
-              attestation_config:
-                type: WORKLOAD
-                content:
-                  value:
-                    - 'PODLABELS:app:mqttbroker'
-                  plugin: K8S
-                  parent_id: '1'
-            - spiffe_id: '3'
-              spiffe_id_path: workload
-              attestation_config:
-                type: WORKLOAD
-                content:
-                  value:
-                    - 'PODLABELS:app:workload'
-                  plugin: K8S
-                  parent_id: '1'
-          
+    e4kdmqtt:
+      broker:
+        frontend:
+          replicas: 2
+        backend:
+          replicas: 2
+          chainCount: 2
+      authentication:
+        credentials:
+          configToml: |
+            [onder]
+            password = "$argon2id$v=19$m=16,t=2,p=1$MTIzNDU2Nzg$Rm5h90nn/O4Xdj2tcOyl+w"
+
+            [onder.attributes]
+            floor = "floor1"
+            site = "site1"          
