@@ -4,6 +4,7 @@ metadata:
   name: my-repository
   namespace: default
 spec:
+  type: "oci"
   # The interval at which to check the upstream for updates
   interval: 1m
   # The repository URL, can be a HTTP/S or SSH address
