@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: connector
+  namespace: default
+data:
+  values.yaml: |
+    connector:
+      enabled: true
+
+    e4kconnector:
+      kafka:
+        endpoint: onderirrigationhackeh.servicebus.windows.net:9093
+        group_id_prefix: e4kconnector
+        auto_commit_interval_ms: 5000
+        auth:
+          type: plain
+          username: $ConnectionString
+          password: Endpoint=sb://onderirrigationhackeh.servicebus.windows.net/;SharedAccessKeyName=sendrule;SharedAccessKey=2GXhA3ald+ta2YaA9zQ4/l5SdktA9pqT5AyyoxYkCg4=;EntityPath=e4k-ingress
+      topicMap:
+        configYaml:
+          route:
+            # A route defined to pull from mqtt topic "topic1" and push to Kafka topic "e4k-ingress" (default - partition 0 only)
+            - kafka: e4k-ingress
+              mqtt: topic1
+              sink_to: kafka # key that dictates direction
+            # A route defined to pull from kafka topic "e4k-egress" (default - partition 0 only) and push to Mqtt topic "topic2"
+            # - kafka: e4k-egress
+            #   mqtt: topic2
+            #   sink_to: mqtt # key that dictates direction
